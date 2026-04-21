@@ -5,7 +5,7 @@ metadata:
   labels:
     app: go-web-app
 spec:
-  replicas: { ? { .Values.replicaCount } }
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: go-web-app
