@@ -10,5 +10,3 @@ ingress:
   - enabled: false
   - className: ""
   - annotations: {}
-  
-  - host: "go-web-app.opsora.space"
