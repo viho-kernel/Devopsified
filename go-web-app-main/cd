@@ -1,0 +1,12 @@
+CI/ CD
+steps in CI
+for CI -> wE Use GH Actions
+stage1: Build and Test
+stage2: Static code analysis
+stage3: Docker image creation and pushing
+stage4: Update helm values with every commit.
+
+STEPS IN CD
+for cd -> We use GITOPS/ ArgoCD
+stage 5: Argocd will watch helmchart everytime
+stage 6: create depoyments in kubernets

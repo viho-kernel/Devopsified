@@ -2,8 +2,8 @@ replicaCount: 2
 
 image:
   repository: go-web-app
-  tag: latest
   pullPolicy: IfNotPresent
+  tag: "v1"
 
 deployment:
   port: 8080
