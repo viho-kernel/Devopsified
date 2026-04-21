@@ -1,0 +1,7 @@
+deployment:
+  - image: "viharireddy18/go-app"
+  - tag: "1.0.0"
+  - port: "8080"
+
+ingress:
+  - host: "go-web-app.opsora.space"
