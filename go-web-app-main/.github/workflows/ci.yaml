@@ -7,7 +7,7 @@ on:
       - "README.md"
       - ".helm/**"
       - "k8s/**"
-      - ".github/**" # Add this to ignore workflow changes
+      - ".github/**"
   pull_request:
     branches:
       - main
@@ -77,7 +77,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./go-web-app-main/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{ github.run_id }}
           cache-from: type=gha
