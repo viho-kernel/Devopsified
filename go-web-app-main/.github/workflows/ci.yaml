@@ -71,6 +71,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          #secret updated
           token: ${{ secrets.TOKEN }}
 
       - name: Update tag in Helm chart
