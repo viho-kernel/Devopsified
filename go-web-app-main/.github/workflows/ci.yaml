@@ -7,7 +7,7 @@ on:
       - "README.md"
       - ".helm/**"
       - "k8s/**"
-      - ".github/**"  # Add this to ignore workflow changes
+      - ".github/**" # Add this to ignore workflow changes
   pull_request:
     branches:
       - main
@@ -46,11 +46,23 @@ jobs:
 
   push:
     runs-on: ubuntu-latest
-    needs: [build, code-quality]
+    needs: [ build, code-quality ]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Debug - Check secrets
+        run: |
+          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+            echo "ERROR: DOCKERHUB_USERNAME is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+            echo "ERROR: DOCKERHUB_TOKEN is not set"
+            exit 1
+          fi
+          echo "Secrets are configured ✓"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -65,9 +77,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./go-web-app-main/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{ github.run_id }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   update-newtag-in-helm-chart:
     runs-on: ubuntu-latest
@@ -82,11 +96,12 @@ jobs:
       - name: Update tag in Helm chart
         run: |
           sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' helm/go-web-app-chart/values.yaml
+          cat helm/go-web-app-chart/values.yaml
 
       - name: Commit and push changes
         run: |
           git config --global user.email "vihari.reddy1802@gmail.com"
           git config --global user.name "Viho-Kernel"
           git add helm/go-web-app-chart/values.yaml
-          git commit -m "Update image tag to ${{ github.run_id }}"
+          git commit -m "Update image tag to ${{ github.run_id }}" || echo "No changes to commit"
           git push origin main
