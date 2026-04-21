@@ -4,7 +4,7 @@ metadata:
   name: go-web-app
 spec:
   selector:
-    app: go-web-app
+    app: {{ .Chart.Name }}
   ports:
     - protocol: TCP
       port: 80
