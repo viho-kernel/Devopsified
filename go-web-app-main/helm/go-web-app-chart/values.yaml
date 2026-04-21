@@ -1,11 +1,11 @@
 replicaCount: 1
 
 deployment:
-  - image: "viharireddy18/go-app"
-  - tag: "1.0.0"
-  - port: "8080"
+  image: "viharireddy18/go-app"
+  tag: "1.0.0"
+  port: "8080"
 
 ingress:
-  - enabled: false
-  - className: ""
-  - annotations: {}
+  enabled: false
+  className: ""
+  annotations: {}

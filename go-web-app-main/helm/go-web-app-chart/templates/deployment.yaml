@@ -15,7 +15,7 @@ spec:
         app: go-web-app
     spec:
       containers:
-        - name: web-container
+        - name: go-web-app
           image: "{{ .Values.deployment.image }}:{{ .Values.deployment.tag }}"
           ports:
-            - containerPort: {{ .Values.deployment.port }}
+            - containerPort: { ? { .Values.deployment.port } }
