@@ -1,7 +1,14 @@
+replicaCount: 1
+
 deployment:
   - image: "viharireddy18/go-app"
   - tag: "1.0.0"
   - port: "8080"
+  - tag: "10016307834"
 
 ingress:
+  - enabled: false
+  - className: ""
+  - annotations: {}
+  
   - host: "go-web-app.opsora.space"
